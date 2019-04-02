@@ -176,43 +176,43 @@ public class YPScraper {
     }
 
   }
-  public static ArrayList<Business> getBusinessData(String locations, String types) throws  Exception{
-//    ArrayList<Business> business_list = new ArrayList<Business>();
-//    business_list.add(new Business("name1","email1","phone1","address1"));
-//    business_list.add(new Business("name2","email2","phone2","address2"));
-//    business_list.add(new Business("name3","email3","phone1","address1"));
-//    business_list.add(new Business("name4","email4","phone2","address2"));
-//    business_list.add(new Business("name5","email5","phone1","address1"));
-//    business_list.add(new Business("name6","email6","phone2","address2"));
-//    business_list.add(new Business("name1","email1","phone1","address1"));
-//    business_list.add(new Business("name2","email2","phone2","address2"));
-//    business_list.add(new Business("name3","email3","phone1","address1"));
-//    business_list.add(new Business("name4","email4","phone2","address2"));
-//    business_list.add(new Business("name5","email5","phone1","address1"));
-//    business_list.add(new Business("name6","email6","phone2","address2"));
-//    business_list.add(new Business("name1","email1","phone1","address1"));
-//    business_list.add(new Business("name2","email2","phone2","address2"));
-//    business_list.add(new Business("name3","email3","phone1","address1"));
-//    business_list.add(new Business("name4","email4","phone2","address2"));
-//    business_list.add(new Business("name5","email5","phone1","address1"));
-//    business_list.add(new Business("name6","email6","phone2","address2"));
-//    business_list.add(new Business("name1","email1","phone1","address1"));
-//    business_list.add(new Business("name2","email2","phone2","address2"));
-//    business_list.add(new Business("name3","email3","phone1","address1"));
-//    business_list.add(new Business("name4","email4","phone2","address2"));
-//    business_list.add(new Business("name5","email5","phone1","address1"));
-//    business_list.add(new Business("name6","email6","phone2","address2"));
-//    try
-//    {
-//      Thread.sleep(1000);
-//    }
-//    catch(InterruptedException ex)
-//    {
-//      Thread.currentThread().interrupt();
-//    }
-//    return  business_list;
-
-   YPScraper.load();
-    return YPScraper.yp.runYPScan(locations,types);
+  public static ArrayList<Business> getBusinessData(String locations, String types, String dummy) throws  Exception{
+    if ( dummy.equalsIgnoreCase("yes") ) {
+      ArrayList<Business> business_list = new ArrayList<Business>();
+      business_list.add(new Business("name1", "email1", "phone1", "address1"));
+      business_list.add(new Business("name2", "email2", "phone2", "address2"));
+      business_list.add(new Business("name3", "email3", "phone1", "address1"));
+      business_list.add(new Business("name4", "email4", "phone2", "address2"));
+      business_list.add(new Business("name5", "email5", "phone1", "address1"));
+      business_list.add(new Business("name6", "email6", "phone2", "address2"));
+      business_list.add(new Business("name1", "email1", "phone1", "address1"));
+      business_list.add(new Business("name2", "email2", "phone2", "address2"));
+      business_list.add(new Business("name3", "email3", "phone1", "address1"));
+      business_list.add(new Business("name4", "email4", "phone2", "address2"));
+      business_list.add(new Business("name5", "email5", "phone1", "address1"));
+      business_list.add(new Business("name6", "email6", "phone2", "address2"));
+      business_list.add(new Business("name1", "email1", "phone1", "address1"));
+      business_list.add(new Business("name2", "email2", "phone2", "address2"));
+      business_list.add(new Business("name3", "email3", "phone1", "address1"));
+      business_list.add(new Business("name4", "email4", "phone2", "address2"));
+      business_list.add(new Business("name5", "email5", "phone1", "address1"));
+      business_list.add(new Business("name6", "email6", "phone2", "address2"));
+      business_list.add(new Business("name1", "email1", "phone1", "address1"));
+      business_list.add(new Business("name2", "email2", "phone2", "address2"));
+      business_list.add(new Business("name3", "email3", "phone1", "address1"));
+      business_list.add(new Business("name4", "email4", "phone2", "address2"));
+      business_list.add(new Business("name5", "email5", "phone1", "address1"));
+      business_list.add(new Business("name6", "email6", "phone2", "address2"));
+      try {
+        Thread.sleep(1000);
+      } catch (InterruptedException ex) {
+        Thread.currentThread().interrupt();
+      }
+      return business_list;
+    }
+    else {
+      YPScraper.load();
+      return YPScraper.yp.runYPScan(locations, types);
+    }
   }
 }

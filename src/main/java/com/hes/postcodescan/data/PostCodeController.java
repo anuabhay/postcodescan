@@ -21,12 +21,13 @@ class PostCodeController {
     @GetMapping("/postcodes")
     @CrossOrigin(origins = "http://localhost:4200")
     public Collection<Business> coolCars( @RequestParam("locations") String locations,
-                                          @RequestParam("types") String types
+                                          @RequestParam("types") String types,
+                                          @RequestParam("dummy") String dummy
     ) {
         ArrayList<Business> list = new ArrayList<Business>();
         try {
 
-            list = YPScraper.getBusinessData(locations,types);
+            list = YPScraper.getBusinessData(locations,types,dummy);
         } catch (Exception e) {
             e.printStackTrace();
         }
