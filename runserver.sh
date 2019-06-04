@@ -1,0 +1,1 @@
+java -Dwebdriver.gecko.driver=/work/anu/scrape-web/chromedriver_linux64/geckodriver -cp ./build/libs/postcodescan-0.0.1-SNAPSHOT.jar org.springframework.boot.loader.JarLauncher -t /work/anu/scrape-web/ypscrape/src/main/resources/types.json  -l /work/anu/scrape-web/ypscrape/src/main/resources/locations.json

@@ -2,6 +2,9 @@ package com.hes;
 
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
+
+import com.hes.postcodescan.data.Location;
+import com.hes.postcodescan.data.LocationList;
 import org.junit.*;
 import static org.junit.Assert.*;
 import org.openqa.selenium.*;
@@ -13,6 +16,10 @@ import net.sourceforge.argparse4j.inf.ArgumentParser;
 import net.sourceforge.argparse4j.inf.ArgumentParserException;
 import net.sourceforge.argparse4j.inf.Namespace;
 import com.hes.postcodescan.data.Business;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.http.HttpMethod;
 
 import java.util.List;
 
@@ -176,6 +183,24 @@ public class YPScraper {
     }
 
   }
+
+  static void getLocationForAddress(){
+    RestTemplate restTemplate = new RestTemplate();
+    LocationList location = restTemplate.getForObject("https://nominatim.openstreetmap.org/search/9%20Admiration%20Drive%20Craigieburn?format=json", LocationList.class);
+
+//    ResponseEntity<List<Location>> response = restTemplate.exchange(
+//            "https://nominatim.openstreetmap.org/search/9%20Admiration%20Drive%20Craigieburn?format=json",
+//            HttpMethod.GET,
+//            null,
+//            new ParameterizedTypeReference<List<Location>>(){});
+//    List<Location> locati
+// on = response.getBody();
+
+
+    System.out.println(location);
+    //log.info(quote.toString());
+  }
+
   public static ArrayList<Business> getBusinessData(String locations, String types, String dummy) throws  Exception{
     if ( dummy.equalsIgnoreCase("yes") ) {
       ArrayList<Business> business_list = new ArrayList<Business>();
@@ -214,5 +239,7 @@ public class YPScraper {
       YPScraper.load();
       return YPScraper.yp.runYPScan(locations, types);
     }
+    //getLocationForAddress();
+    //return   new ArrayList<Business>();
   }
 }
