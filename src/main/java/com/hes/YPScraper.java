@@ -1,10 +1,15 @@
 package com.hes;
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hes.postcodescan.data.Location;
 import com.hes.postcodescan.data.LocationList;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.junit.*;
 import static org.junit.Assert.*;
 import org.openqa.selenium.*;
@@ -28,7 +33,7 @@ public class YPScraper {
   private String baseUrl;
   private boolean acceptNextAlert = true;
   private StringBuffer verificationErrors = new StringBuffer();
-  private static  YPScraper yp = null;
+  public static  YPScraper yp = null;
 
   @Before
   public void setUp() throws Exception {
@@ -159,10 +164,10 @@ public class YPScraper {
             .defaultHelp(true)
             .description("Calculate checksum of given files.");
     parser.addArgument("-l", "--locations")
-            .setDefault("locations.json")
+            .setDefault("/work/anu/scrape-web/postcodescan/src/main/resources/locations.json")
             .help("Locations file to be used");
     parser.addArgument("-t", "--types")
-            .setDefault("types.json")
+            .setDefault("/work/anu/scrape-web/postcodescan/src/main/resources/types.json")
             .help("Business Types file to be used");
     Namespace ns = null;
     try {
@@ -241,5 +246,45 @@ public class YPScraper {
     }
     //getLocationForAddress();
     //return   new ArrayList<Business>();
+  }
+
+  public static void main(String[] args) throws  Exception{
+
+    String [] config = parse_args( args);
+    try {
+      JSONParser parser = new JSONParser();
+
+      JSONObject loc_data = (JSONObject) parser.parse(
+              new FileReader(config[0]));//path to the JSON file.
+
+      JSONObject type_data = (JSONObject) parser.parse(
+              new FileReader(config[1]));//path to the JSON file.
+
+      String loc = loc_data.values().toString();
+      loc = loc.replaceAll("\\[|\\]", "");
+
+      String type = type_data.values().toString();
+      type = type.replaceAll("\\[|\\]", "");
+      YPScraper.load();
+      ArrayList<Business> z = YPScraper.yp.runYPScan(loc, type);
+
+      String fileName_email = "/tmp/addresses_email_" + loc.toCharArray()[1] + ".txt";
+      String fileName = "/tmp/addresses_" + loc.toCharArray()[1] + ".txt";;
+
+      PrintWriter pwemail = new PrintWriter(new FileOutputStream(fileName_email));
+      PrintWriter pw = new PrintWriter(new FileOutputStream(fileName));
+      for (Business club : z) {
+        pw.println(club.getName() + ',' + club.getEmail() + ' ' + club.getPhone());
+        if     (club.getEmail().equalsIgnoreCase("")== false){
+          pwemail.println(club.getEmail() );
+        }
+      }
+      pw.close();
+      pwemail.close();
+
+    } catch (IOException | ParseException e) {
+      e.printStackTrace();
+    }
+    int y = 0;
   }
 }
